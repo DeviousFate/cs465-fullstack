@@ -8,6 +8,10 @@ var indexRouter = require('./app_server/routes/index');
 var usersRouter = require('./app_server/routes/users');
 var travelRouter = require('./app_server/routes/travel');
 var handlebars = require('hbs');
+var apiRouter = require('./app_api/routes/index');
+
+// Bring in the DB connection
+require('./app_api/models/db');
 
 var app = express();
 
@@ -27,6 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/travel', travelRouter);
+app.use('/api', apiRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -35,6 +40,7 @@ app.use(function(req, res, next) {
 
 // error handler
 app.use(function(err, req, res, next) {
+
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
