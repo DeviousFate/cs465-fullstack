@@ -1,0 +1,14 @@
+/* Minimal app styles restored so angular.json styles entry resolves */
+body {
+  padding-top: 1rem;
+}
+
+.card-img-top {
+  height: 180px;
+  object-fit: cover;
+}
+
+/* small helper: gutters */
+.row.g-3 {
+  gap: 1rem;
+}
