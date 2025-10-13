@@ -1,11 +1,11 @@
 export interface Trip {
-    _id: string; // MongoDB document ID
+    _id: string;
     code: string;
     name: string;
     length: string;
-    start: string;
+    start: string | Date;
     resort: string;
     perPerson: string;
     image: string;
     description: string;
-}
+};
