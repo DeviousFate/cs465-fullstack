@@ -1,35 +1,28 @@
-const tripsEndpoint = 'http://localhost:3000/api/trips';
-const options = {
-    method: 'GET',
-    headers: {
-        'Accept': 'application/json'
-    },
-};
-
-//var fs = require('fs');
-//var trips = JSON.parse(fs.readFileSync('./data/trips.json','utf8'));
-
-/* GET travel view */
-const travel = async function (req, res, next) {
-    await fetch(tripsEndpoint, options)
+/**
+ * GET Travelers page.
+ *
+ * @param req Express Request object
+ * @param res Express Response object
+ * @param next Express next function
+ */
+const travelController = async (req, res, next) => {
+  await fetch(trips.url, trips.options)
     .then((res) => res.json())
     .then((json) => {
-        let message = null;
-        if (!(json instanceof Array)) {
-            message = 'API lookup error';
-            json = [];
-        }else {
-            if (!json.length) {
-                message = "No trips exist in our database!";
-            }
-        }
-        res.render('travel', { title: 'Travlr Getaways', trips: json, message });
+      let message = null;
+      if (!(json instanceof Array)) {
+        message = "Trip Lookup error";
+      } else if (json.length === 0) {
+        message = "No trips found";
+      }
+      res.render("travel", { title: "Travlr Getaways", trips: json, message });
     })
-    .catch((err) => res.status(500).send(err.message));    
+    .catch((err) => {
+      Logger.error(err instanceof Error ? err.message : err);
+      return res.status(500).send("Unable to process trips");
+    });
 };
 
-
-
 module.exports = {
-    travel
+  travelController,
 };
